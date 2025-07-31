@@ -1,1 +1,1 @@
-# ShopStack
+# ShopStack Project
