@@ -1,0 +1,41 @@
+version: "3.8"  # optional, can be removed since it's deprecated
+
+services:
+  db:
+    image: mysql:8
+    container_name: ecommerce-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: ecommerce_db
+      MYSQL_ROOT_PASSWORD: Mishra2245%2245
+    ports:
+      - "3307:3306"
+    networks:
+      - ecommerce-network
+
+  backend:
+    build: ./Backend
+    container_name: ecommerce-backend
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ecommerce_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Mishra2245%2245
+    depends_on:
+      - db
+    networks:
+      - ecommerce-network
+
+  frontend:
+    build: ./Frontend
+    container_name: ecommerce-frontend
+    ports:
+      - "3001:3000"
+    networks:
+      - ecommerce-network
+
+# **Only one networks section at the bottom**
+networks:
+  ecommerce-network:
+   driver: bridge
